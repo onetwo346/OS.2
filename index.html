@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cosmos Coderr OS v4.1</title>
+  <title>Cosmos Coderr OS v5.0</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
@@ -23,16 +23,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 20;
+      z-index: 100;
       animation: fadeOut 1s ease 5s forwards;
     }
     #boot p {
-      font-size: 1.8em;
+      font-size: 2em;
       animation: typing 3s steps(40, end), blink 0.5s step-end infinite;
       border-right: 4px solid #1e90ff;
       white-space: nowrap;
       overflow: hidden;
-      text-shadow: 0 0 10px #1e90ff;
+      text-shadow: 0 0 15px #1e90ff;
     }
     #boot .stars {
       position: absolute;
@@ -57,8 +57,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      z-index: 15;
-      animation: slideIn 1s ease;
+      z-index: 90;
     }
     #login::before {
       content: '';
@@ -67,7 +66,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       z-index: 0;
     }
     #login > * {
@@ -75,41 +74,41 @@
       z-index: 1;
     }
     #login h2 {
-      font-size: 2.5em;
-      text-shadow: 0 0 15px #1e90ff;
-      margin-bottom: 25px;
+      font-size: 2.8em;
+      text-shadow: 0 0 20px #1e90ff;
+      margin-bottom: 30px;
       color: #e0f7fa;
     }
     #login input, #login select {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       color: #e0f7fa;
       border: 2px solid #1e90ff;
       padding: 15px;
-      margin: 10px 0;
-      border-radius: 8px;
+      margin: 12px 0;
+      border-radius: 10px;
       font-family: 'Orbitron', sans-serif;
-      width: 300px;
+      width: 320px;
       max-width: 90%;
       transition: box-shadow 0.3s ease;
     }
     #login input:focus, #login select:focus {
-      box-shadow: 0 0 15px #1e90ff;
+      box-shadow: 0 0 20px #1e90ff;
       outline: none;
     }
     #login button {
       background: #1e90ff;
       color: #000;
-      padding: 12px 25px;
+      padding: 15px 30px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.1em;
+      font-size: 1.2em;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     #login button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px #1e90ff;
+      box-shadow: 0 0 25px #1e90ff;
     }
 
     #desktop {
@@ -128,7 +127,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       z-index: 0;
     }
     #desktop > * {
@@ -138,56 +137,56 @@
     .icon {
       position: absolute;
       text-align: center;
-      width: 90px;
+      width: 100px;
       color: #e0f7fa;
       cursor: pointer;
       transition: transform 0.2s ease;
-      text-shadow: 0 0 5px #1e90ff;
+      text-shadow: 0 0 6px #1e90ff;
     }
     .icon:hover {
       transform: scale(1.1);
     }
     .icon img {
-      width: 70px;
-      filter: drop-shadow(0 0 5px #1e90ff);
+      width: 80px;
+      filter: drop-shadow(0 0 6px #1e90ff);
     }
     .window {
       position: absolute;
-      width: 400px;
-      height: 350px;
+      width: 450px;
+      height: 400px;
       background: rgba(0, 0, 0, 0.85);
       border: 2px solid #1e90ff;
-      border-radius: 10px;
-      box-shadow: 0 0 20px #1e90ff;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #1e90ff;
       display: none;
       z-index: 10;
       resize: both;
       overflow: auto;
-      min-width: 250px;
-      min-height: 200px;
+      min-width: 300px;
+      min-height: 250px;
     }
     .title-bar {
       background: linear-gradient(90deg, #1e90ff, #00b7eb);
       color: #000;
-      padding: 10px;
+      padding: 12px;
       font-weight: bold;
       cursor: move;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
     .title-bar button {
       background: none;
       border: none;
       color: #000;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
     }
     .content {
-      padding: 20px;
-      height: calc(100% - 40px);
+      padding: 25px;
+      height: calc(100% - 44px);
       overflow-y: auto;
       color: #e0f7fa;
     }
@@ -195,50 +194,231 @@
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 45px;
+      height: 50px;
       background: rgba(0, 0, 0, 0.9);
       color: #e0f7fa;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 25px;
       font-size: 16px;
-      box-shadow: 0 -2px 15px #1e90ff;
+      box-shadow: 0 -2px 20px #1e90ff;
     }
     #start-menu {
       position: absolute;
-      bottom: 45px;
-      left: 15px;
+      bottom: 50px;
+      left: 20px;
       background: rgba(0, 0, 0, 0.9);
       border: 2px solid #1e90ff;
-      border-radius: 8px;
+      border-radius: 10px;
       display: none;
       flex-direction: column;
-      padding: 10px;
+      padding: 15px;
       z-index: 20;
+      min-width: 200px;
     }
     #start-menu button {
       background: none;
       color: #e0f7fa;
       border: none;
-      padding: 10px;
+      padding: 12px;
       text-align: left;
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
       transition: background 0.2s ease;
     }
     #start-menu button:hover {
-      background: rgba(30, 144, 255, 0.2);
+      background: rgba(30, 144, 255, 0.25);
     }
     #system-tray {
       display: flex;
-      gap: 15px;
+      gap: 20px;
+      align-items: center;
     }
     #system-tray .tray-icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       cursor: pointer;
       filter: invert(1) hue-rotate(180deg);
+    }
+    #notification-center {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 300px;
+      height: 400px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #1e90ff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #1e90ff;
+      display: none;
+      flex-direction: column;
+      padding: 15px;
+      z-index: 30;
+    }
+    #notification-center h3 {
+      margin-bottom: 10px;
+      color: #1e90ff;
+    }
+    #notification-list {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+    .notification {
+      padding: 10px;
+      border-bottom: 1px solid #1e90ff;
+      margin-bottom: 5px;
+    }
+    #control-panel {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 250px;
+      height: 300px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #1e90ff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #1e90ff;
+      display: none;
+      flex-direction: column;
+      padding: 15px;
+      z-index: 30;
+    }
+    #control-panel button {
+      background: #1e90ff;
+      color: #000;
+      padding: 8px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    #control-panel button:hover {
+      transform: scale(1.05);
+    }
+    #widget-area {
+      position: absolute;
+      top: 60px;
+      left: 10px;
+      width: 250px;
+      height: calc(100% - 110px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px;
+      z-index: 20;
+    }
+    .widget {
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #1e90ff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .widget:hover {
+      transform: scale(1.1);
+    }
+    #workspace-switcher {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 20;
+    }
+    .workspace {
+      width: 40px;
+      height: 40px;
+      background: #1e90ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .workspace:hover {
+      background: #00b7eb;
+    }
+    #app-store {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 500px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #1e90ff;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #1e90ff;
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      z-index: 40;
+    }
+    #app-list {
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .app-item {
+      width: 120px;
+      height: 150px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #1e90ff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .app-item:hover {
+      transform: scale(1.05);
+    }
+    .app-item img {
+      width: 60px;
+      height: 60px;
+    }
+    #file-explorer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 400px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #1e90ff;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #1e90ff;
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      z-index: 40;
+    }
+    #file-list {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+    .file-item {
+      padding: 10px;
+      border-bottom: 1px solid #1e90ff;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .file-item:hover {
+      background: rgba(30, 144, 255, 0.2);
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -253,7 +433,7 @@
   </div>
 
   <div id="login">
-    <h2>Welcome to Cosmos Coderr OS v4.1</h2>
+    <h2>Welcome to Cosmos Coderr OS v5.0</h2>
     <input type="text" placeholder="Enter Cosmic Name" id="username">
     <select id="rank">
       <option value="Starborn">Starborn</option>
@@ -265,24 +445,32 @@
   </div>
 
   <div id="desktop">
-    <div class="icon" style="top: 50px; left: 50px;" onclick="openApp('soulApp')">
+    <div class="icon" style="top: 60px; left: 60px;" onclick="openApp('soulApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
       <div>SoulScan</div>
     </div>
-    <div class="icon" style="top: 50px; left: 160px;" onclick="openApp('aiApp')">
+    <div class="icon" style="top: 60px; left: 180px;" onclick="openApp('aiApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
       <div>CoderrGPT</div>
     </div>
-    <div class="icon" style="top: 160px; left: 50px;" onclick="openApp('mapApp')">
+    <div class="icon" style="top: 180px; left: 60px;" onclick="openApp('mapApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
       <div>Star Map</div>
     </div>
-    <div class="icon" style="top: 160px; left: 160px;" onclick="openApp('settingsApp')">
+    <div class="icon" style="top: 180px; left: 180px;" onclick="openApp('settingsApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/126/126794.png" />
       <div>Settings</div>
     </div>
+    <div class="icon" style="top: 300px; left: 60px;" onclick="openApp('fileExplorer')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1041/1041986.png" />
+      <div>File Explorer</div>
+    </div>
+    <div class="icon" style="top: 300px; left: 180px;" onclick="openApp('appStore')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1039/1039649.png" />
+      <div>App Store</div>
+    </div>
 
-    <div id="soulApp" class="window" style="top:120px; left:120px;">
+    <div id="soulApp" class="window" style="top:140px; left:140px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🔮 SoulScan</span>
         <button onclick="closeApp('soulApp')">✖</button>
@@ -294,7 +482,7 @@
       </div>
     </div>
 
-    <div id="aiApp" class="window" style="top:170px; left:170px;">
+    <div id="aiApp" class="window" style="top:190px; left:190px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🤖 CoderrGPT</span>
         <button onclick="closeApp('aiApp')">✖</button>
@@ -305,7 +493,7 @@
       </div>
     </div>
 
-    <div id="mapApp" class="window" style="top:220px; left:220px;">
+    <div id="mapApp" class="window" style="top:240px; left:240px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🌌 Star Map</span>
         <button onclick="closeApp('mapApp')">✖</button>
@@ -313,11 +501,11 @@
       <div class="content">
         <p>Your current constellation: <b>Orion's Gate</b></p>
         <p>Portal Opens: <b>June 22, 3:33 AM</b></p>
-        <canvas id="starChart" width="350" height="150"></canvas>
+        <canvas id="starChart" width="400" height="150"></canvas>
       </div>
     </div>
 
-    <div id="settingsApp" class="window" style="top:140px; left:140px;">
+    <div id="settingsApp" class="window" style="top:160px; left:160px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>⚙ Settings</span>
         <button onclick="closeApp('settingsApp')">✖</button>
@@ -331,7 +519,103 @@
           <option value="blue">Blue</option>
           <option value="purple">Purple</option>
         </select></p>
+        <p>Workspaces: <input type="number" id="workspaceCount" min="1" max="5" value="1" onchange="updateWorkspaces()"></p>
       </div>
+    </div>
+
+    <div id="fileExplorer" class="window" style="top:150px; left:150px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>📁 File Explorer</span>
+        <button onclick="closeApp('fileExplorer')">✖</button>
+      </div>
+      <div class="content">
+        <div id="file-list">
+          <div class="file-item">cosmic_notes.txt</div>
+          <div class="file-item">star_map_data.json</div>
+          <div class="file-item">ai_log.log</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="appStore" class="window">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>🏬 App Store</span>
+        <button onclick="closeApp('appStore')">✖</button>
+      </div>
+      <div class="content">
+        <div id="app-list">
+          <div class="app-item" onclick="openApp('weatherApp')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1146/1146867.png" />
+            <span>Weather</span>
+          </div>
+          <div class="app-item" onclick="openApp('musicApp')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1383/1383269.png" />
+            <span>Music</span>
+          </div>
+          <div class="app-item" onclick="openApp('calendarApp')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2838/2838783.png" />
+            <span>Calendar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="weatherApp" class="window" style="top:200px; left:200px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>☀ Weather</span>
+        <button onclick="closeApp('weatherApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Current: Clear Skies, 72°F</p>
+        <p>Forecast: Sunny, 75°F</p>
+      </div>
+    </div>
+
+    <div id="musicApp" class="window" style="top:250px; left:250px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>🎵 Music</span>
+        <button onclick="closeApp('musicApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Now Playing: Cosmic Tune</p>
+        <button onclick="playMusic()">Play</button>
+      </div>
+    </div>
+
+    <div id="calendarApp" class="window" style="top:300px; left:300px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>📅 Calendar</span>
+        <button onclick="closeApp('calendarApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Today: June 13, 2025</p>
+        <p>Events: Portal Opening at 3:33 AM</p>
+      </div>
+    </div>
+
+    <div id="notification-center">
+      <h3>Notifications</h3>
+      <div id="notification-list">
+        <div class="notification">New update available!</div>
+        <div class="notification">SoulScan complete.</div>
+      </div>
+    </div>
+
+    <div id="control-panel">
+      <button onclick="toggleNotificationCenter()">Notifications</button>
+      <button onclick="openApp('settingsApp')">Settings</button>
+      <button onclick="logout()">Power Off</button>
+    </div>
+
+    <div id="widget-area">
+      <div class="widget" onclick="openApp('weatherApp')">Weather</div>
+      <div class="widget" onclick="openApp('calendarApp')">Calendar</div>
+    </div>
+
+    <div id="workspace-switcher">
+      <div class="workspace" onclick="switchWorkspace(1)">1</div>
+      <div class="workspace" onclick="switchWorkspace(2)">2</div>
+      <div class="workspace" onclick="switchWorkspace(3)">3</div>
     </div>
 
     <div id="taskbar">
@@ -341,10 +625,13 @@
         <button onclick="openApp('aiApp')">CoderrGPT</button>
         <button onclick="openApp('mapApp')">Star Map</button>
         <button onclick="openApp('settingsApp')">Settings</button>
-        <button onclick="logout()">Logout</button>
+        <button onclick="openApp('fileExplorer')">File Explorer</button>
+        <button onclick="openApp('appStore')">App Store</button>
+        <button onclick="logout()">Power Off</button>
       </div>
       <div id="system-tray">
-        <img class="tray-icon" src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" onclick="openApp('settingsApp')" title="Settings">
+        <img class="tray-icon" src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" onclick="toggleControlPanel()" title="Control Panel">
+        <img class="tray-icon" src="https://cdn-icons-png.flaticon.com/512/159/159489.png" onclick="toggleNotificationCenter()" title="Notifications">
         <div id="clock"></div>
       </div>
     </div>
@@ -419,6 +706,18 @@
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
+    function toggleNotificationCenter() {
+      clickSound.play();
+      const center = document.getElementById('notification-center');
+      center.style.display = center.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function toggleControlPanel() {
+      clickSound.play();
+      const panel = document.getElementById('control-panel');
+      panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
+    }
+
     function updateClock() {
       const now = new Date();
       document.getElementById("clock").innerText = now.toLocaleTimeString();
@@ -456,6 +755,31 @@
       document.querySelectorAll('#start-menu button').forEach(b => b.style.color = '#e0f7fa');
       document.querySelectorAll('.title-bar button').forEach(b => b.style.color = '#000');
       localStorage.setItem('theme', theme);
+    }
+
+    function updateWorkspaces() {
+      clickSound.play();
+      const count = document.getElementById('workspaceCount').value;
+      const switcher = document.getElementById('workspace-switcher');
+      switcher.innerHTML = '';
+      for (let i = 1; i <= count; i++) {
+        const div = document.createElement('div');
+        div.className = 'workspace';
+        div.textContent = i;
+        div.onclick = () => switchWorkspace(i);
+        switcher.appendChild(div);
+      }
+    }
+
+    function switchWorkspace(num) {
+      clickSound.play();
+      // Simulate workspace switching (could load different app layouts)
+      alert(`Switched to Workspace ${num}`);
+    }
+
+    function playMusic() {
+      clickSound.play();
+      alert('Playing Cosmic Tune...');
     }
 
     window.onload = () => {
