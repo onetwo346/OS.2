@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cosmos Coderr OS v4.0</title>
+  <title>Cosmos Coderr OS v4.1</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
       width: 100vw;
       height: 100vh;
       background: black;
-      color: white;
+      color: #e0f7fa;
       font-family: 'Orbitron', sans-serif;
       overflow: hidden;
     }
@@ -18,7 +18,7 @@
       position: fixed;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at center, #0ff4 10%, #000 70%);
+      background: radial-gradient(circle at center, #1e90ff33 10%, #000 70%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -27,25 +27,23 @@
       animation: fadeOut 1s ease 5s forwards;
     }
     #boot p {
-      font-size: 1.5em;
-      animation: typing 3s steps(40, end), blink .5s step-end infinite;
-      border-right: 4px solid cyan;
+      font-size: 1.8em;
+      animation: typing 3s steps(40, end), blink 0.5s step-end infinite;
+      border-right: 4px solid #1e90ff;
       white-space: nowrap;
       overflow: hidden;
-      text-shadow: 0 0 10px cyan;
+      text-shadow: 0 0 10px #1e90ff;
     }
     #boot .stars {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: transparent;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
       animation: twinkle 10s infinite;
     }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
-    }
+    @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     @keyframes typing { from { width: 0 } to { width: 100% } }
-    @keyframes blink { from, to { border-color: transparent } 50% { border-color: cyan } }
+    @keyframes blink { from, to { border-color: transparent } 50% { border-color: #1e90ff } }
     @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
     @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -54,7 +52,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: url('https://i.imgur.com/3oQfQxC.jpg') center center/cover;
+      background: url('https://images.unsplash.com/photo-1503923259440-784cf8a5e4cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center center/cover;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -62,84 +60,116 @@
       z-index: 15;
       animation: slideIn 1s ease;
     }
+    #login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+    #login > * {
+      position: relative;
+      z-index: 1;
+    }
     #login h2 {
-      font-size: 2em;
-      text-shadow: 0 0 15px cyan;
-      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 0 0 15px #1e90ff;
+      margin-bottom: 25px;
+      color: #e0f7fa;
     }
     #login input, #login select {
-      background: rgba(0, 0, 0, 0.8);
-      color: cyan;
-      border: 2px solid cyan;
-      padding: 12px;
-      margin: 10px;
-      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #e0f7fa;
+      border: 2px solid #1e90ff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
       font-family: 'Orbitron', sans-serif;
+      width: 300px;
+      max-width: 90%;
       transition: box-shadow 0.3s ease;
     }
     #login input:focus, #login select:focus {
-      box-shadow: 0 0 10px cyan;
+      box-shadow: 0 0 15px #1e90ff;
       outline: none;
     }
     #login button {
-      background: cyan;
-      color: black;
-      padding: 10px 20px;
+      background: #1e90ff;
+      color: #000;
+      padding: 12px 25px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
+      font-size: 1.1em;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     #login button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px cyan;
+      box-shadow: 0 0 20px #1e90ff;
     }
 
     #desktop {
       display: none;
       width: 100%;
       height: 100%;
-      background: url('https://i.imgur.com/3oQfQxC.jpg') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1503923259440-784cf8a5e4cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
       position: absolute;
       top: 0;
       left: 0;
     }
+    #desktop::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+    #desktop > * {
+      position: relative;
+      z-index: 1;
+    }
     .icon {
       position: absolute;
       text-align: center;
-      width: 80px;
-      color: cyan;
+      width: 90px;
+      color: #e0f7fa;
       cursor: pointer;
       transition: transform 0.2s ease;
-      text-shadow: 0 0 5px cyan;
+      text-shadow: 0 0 5px #1e90ff;
     }
     .icon:hover {
       transform: scale(1.1);
     }
     .icon img {
-      width: 64px;
-      filter: drop-shadow(0 0 5px cyan);
+      width: 70px;
+      filter: drop-shadow(0 0 5px #1e90ff);
     }
     .window {
       position: absolute;
-      width: 350px;
-      height: 300px;
-      background: rgba(0, 0, 0, 0.9);
-      border: 2px solid cyan;
-      border-radius: 8px;
-      box-shadow: 0 0 15px cyan;
+      width: 400px;
+      height: 350px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #1e90ff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #1e90ff;
       display: none;
       z-index: 10;
       resize: both;
       overflow: auto;
-      min-width: 200px;
-      min-height: 150px;
+      min-width: 250px;
+      min-height: 200px;
     }
     .title-bar {
-      background: linear-gradient(90deg, cyan, #00b7eb);
-      color: black;
-      padding: 8px;
+      background: linear-gradient(90deg, #1e90ff, #00b7eb);
+      color: #000;
+      padding: 10px;
       font-weight: bold;
       cursor: move;
       display: flex;
@@ -151,36 +181,36 @@
     .title-bar button {
       background: none;
       border: none;
-      color: black;
+      color: #000;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 16px;
     }
     .content {
-      padding: 15px;
+      padding: 20px;
       height: calc(100% - 40px);
       overflow-y: auto;
-      color: cyan;
+      color: #e0f7fa;
     }
     #taskbar {
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.85);
-      color: cyan;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.9);
+      color: #e0f7fa;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 15px;
+      padding: 0 20px;
       font-size: 16px;
-      box-shadow: 0 -2px 10px cyan;
+      box-shadow: 0 -2px 15px #1e90ff;
     }
     #start-menu {
       position: absolute;
-      bottom: 40px;
-      left: 10px;
+      bottom: 45px;
+      left: 15px;
       background: rgba(0, 0, 0, 0.9);
-      border: 2px solid cyan;
+      border: 2px solid #1e90ff;
       border-radius: 8px;
       display: none;
       flex-direction: column;
@@ -189,24 +219,24 @@
     }
     #start-menu button {
       background: none;
-      color: cyan;
+      color: #e0f7fa;
       border: none;
-      padding: 8px;
+      padding: 10px;
       text-align: left;
       cursor: pointer;
       font-family: 'Orbitron', sans-serif;
       transition: background 0.2s ease;
     }
     #start-menu button:hover {
-      background: rgba(0, 255, 255, 0.2);
+      background: rgba(30, 144, 255, 0.2);
     }
     #system-tray {
       display: flex;
-      gap: 10px;
+      gap: 15px;
     }
     #system-tray .tray-icon {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
       filter: invert(1) hue-rotate(180deg);
     }
@@ -218,12 +248,12 @@
   <audio id="clickSound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
 
   <div id="boot">
-    <div class="stars" style="background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;"></div>
+    <div class="stars"></div>
     <p>Initializing Cosmic Nexus...</p>
   </div>
 
   <div id="login">
-    <h2>Welcome to Cosmos Coderr OS v4.0</h2>
+    <h2>Welcome to Cosmos Coderr OS v4.1</h2>
     <input type="text" placeholder="Enter Cosmic Name" id="username">
     <select id="rank">
       <option value="Starborn">Starborn</option>
@@ -235,24 +265,24 @@
   </div>
 
   <div id="desktop">
-    <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('soulApp')">
+    <div class="icon" style="top: 50px; left: 50px;" onclick="openApp('soulApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
       <div>SoulScan</div>
     </div>
-    <div class="icon" style="top: 40px; left: 140px;" onclick="openApp('aiApp')">
+    <div class="icon" style="top: 50px; left: 160px;" onclick="openApp('aiApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
       <div>CoderrGPT</div>
     </div>
-    <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('mapApp')">
+    <div class="icon" style="top: 160px; left: 50px;" onclick="openApp('mapApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
       <div>Star Map</div>
     </div>
-    <div class="icon" style="top: 140px; left: 140px;" onclick="openApp('settingsApp')">
+    <div class="icon" style="top: 160px; left: 160px;" onclick="openApp('settingsApp')">
       <img src="https://cdn-icons-png.flaticon.com/512/126/126794.png" />
       <div>Settings</div>
     </div>
 
-    <div id="soulApp" class="window" style="top:100px; left:100px;">
+    <div id="soulApp" class="window" style="top:120px; left:120px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🔮 SoulScan</span>
         <button onclick="closeApp('soulApp')">✖</button>
@@ -264,18 +294,18 @@
       </div>
     </div>
 
-    <div id="aiApp" class="window" style="top:150px; left:150px;">
+    <div id="aiApp" class="window" style="top:170px; left:170px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🤖 CoderrGPT</span>
         <button onclick="closeApp('aiApp')">✖</button>
       </div>
       <div class="content">
-        <input type="text" id="aiInput" placeholder="Ask CoderrGPT..." style="width: 100%; margin-bottom: 10px;">
+        <input type="text" id="aiInput" placeholder="Ask CoderrGPT..." style="width: 100%; margin-bottom: 15px;">
         <div id="aiOutput">This is a simulated AI. Type your query above.</div>
       </div>
     </div>
 
-    <div id="mapApp" class="window" style="top:200px; left:200px;">
+    <div id="mapApp" class="window" style="top:220px; left:220px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>🌌 Star Map</span>
         <button onclick="closeApp('mapApp')">✖</button>
@@ -283,23 +313,23 @@
       <div class="content">
         <p>Your current constellation: <b>Orion's Gate</b></p>
         <p>Portal Opens: <b>June 22, 3:33 AM</b></p>
-        <canvas id="starChart" width="300" height="100"></canvas>
+        <canvas id="starChart" width="350" height="150"></canvas>
       </div>
     </div>
 
-    <div id="settingsApp" class="window" style="top:120px; left:120px;">
+    <div id="settingsApp" class="window" style="top:140px; left:140px;">
       <div class="title-bar" onmousedown="startDrag(event)">
         <span>⚙ Settings</span>
         <button onclick="closeApp('settingsApp')">✖</button>
       </div>
       <div class="content">
         <p>Background: <select id="bgSelect" onchange="changeBackground()">
-          <option value="https://i.imgur.com/3oQfQxC.jpg">Nebula</option>
-          <option value="https://i.imgur.com/8Q0qW7J.jpg">Galaxy</option>
+          <option value="https://images.unsplash.com/photo-1503923259440-784cf8a5e4cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80">Nebula</option>
+          <option value="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80">Galaxy</option>
         </select></p>
         <p>Theme: <select id="themeSelect" onchange="changeTheme()">
-          <option value="cyan">Cyan</option>
-          <option value="magenta">Magenta</option>
+          <option value="blue">Blue</option>
+          <option value="purple">Purple</option>
         </select></p>
       </div>
     </div>
@@ -321,17 +351,14 @@
   </div>
 
   <script>
-    // Sound Effects
     const bootSound = document.getElementById('bootSound');
     const clickSound = document.getElementById('clickSound');
     bootSound.play();
 
-    // Boot Sequence
     setTimeout(() => {
       document.getElementById("login").style.display = "flex";
     }, 5000);
 
-    // User Persistence
     const usernameInput = document.getElementById('username');
     usernameInput.value = localStorage.getItem('cosmicName') || '';
 
@@ -350,7 +377,6 @@
       document.getElementById("login").style.display = "flex";
     }
 
-    // Window Management
     let zIndex = 10;
     function openApp(id) {
       clickSound.play();
@@ -365,7 +391,6 @@
       document.getElementById(id).style.display = "none";
     }
 
-    // Drag Functionality
     let dragTarget, offsetX, offsetY;
     function startDrag(e) {
       dragTarget = e.target.closest('.window');
@@ -388,35 +413,31 @@
       document.onmouseup = null;
     }
 
-    // Start Menu
     function toggleStartMenu() {
       clickSound.play();
       const menu = document.getElementById('start-menu');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Clock
     function updateClock() {
       const now = new Date();
       document.getElementById("clock").innerText = now.toLocaleTimeString();
     }
     setInterval(updateClock, 1000);
 
-    // Star Chart
     function drawStarChart() {
       const canvas = document.getElementById('starChart');
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < 50; i++) {
         ctx.beginPath();
         ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 255, 255, ${Math.random()})`;
+        ctx.fillStyle = `rgba(30, 144, 255, ${Math.random()})`;
         ctx.fill();
       }
     }
 
-    // Settings
     function changeBackground() {
       clickSound.play();
       const bg = document.getElementById('bgSelect').value;
@@ -428,15 +449,15 @@
     function changeTheme() {
       clickSound.play();
       const theme = document.getElementById('themeSelect').value;
-      const color = theme === 'cyan' ? 'cyan' : 'magenta';
+      const color = theme === 'blue' ? '#1e90ff' : '#800080';
       document.querySelectorAll('.window').forEach(w => w.style.borderColor = color);
-      document.querySelectorAll('.title-bar').forEach(tb => tb.style.background = `linear-gradient(90deg, ${color}, ${theme === 'cyan' ? '#00b7eb' : '#ff00ff'})`);
-      document.querySelectorAll('.icon').forEach(i => i.style.color = color);
-      document.querySelectorAll('#start-menu button').forEach(b => b.style.color = color);
+      document.querySelectorAll('.title-bar').forEach(tb => tb.style.background = `linear-gradient(90deg, ${color}, ${theme === 'blue' ? '#00b7eb' : '#d8bfd8'})`);
+      document.querySelectorAll('.icon').forEach(i => i.style.color = '#e0f7fa');
+      document.querySelectorAll('#start-menu button').forEach(b => b.style.color = '#e0f7fa');
+      document.querySelectorAll('.title-bar button').forEach(b => b.style.color = '#000');
       localStorage.setItem('theme', theme);
     }
 
-    // Load Saved Settings
     window.onload = () => {
       const savedBg = localStorage.getItem('background');
       if (savedBg) {
@@ -451,7 +472,6 @@
       }
     };
 
-    // CoderrGPT Simulation
     document.getElementById('aiInput')?.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         clickSound.play();
