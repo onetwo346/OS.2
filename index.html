@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cosmos Coderr OS v2.0</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: black;
+      color: white;
+    }
+
+    #boot {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(#111 0%, #000 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeOut 1s ease 3s forwards;
+    }
+
+    #boot p {
+      font-size: 1.5em;
+      animation: typing 3s steps(40, end), blink .75s step-end infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid cyan;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: cyan; }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    #desktop {
+      width: 100vw;
+      height: 100vh;
+      background: url('https://i.imgur.com/3oQfQxC.jpg') no-repeat center center/cover;
+      position: relative;
+      display: none;
+    }
+
+    .icon {
+      position: absolute;
+      width: 80px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .icon img {
+      width: 64px;
+    }
+
+    .window {
+      position: absolute;
+      width: 300px;
+      height: 250px;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid cyan;
+      box-shadow: 0 0 10px cyan;
+      display: none;
+      z-index: 10;
+    }
+
+    .title-bar {
+      background: cyan;
+      color: black;
+      padding: 5px;
+      cursor: move;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 10px;
+      height: calc(100% - 30px);
+      overflow-y: auto;
+    }
+
+    #taskbar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 30px;
+      background: rgba(0,0,0,0.7);
+      color: cyan;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+
+    textarea, input {
+      width: 100%;
+      background: black;
+      color: cyan;
+      border: none;
+      resize: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="boot">
+  <p>Initializing Cosmos Coderr OS...</p>
+</div>
+
+<div id="desktop">
+  <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('notesApp')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
+    <div>Notes</div>
+  </div>
+  <div class="icon" style="top: 40px; left: 140px;" onclick="openApp('aiApp')">
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
+    <div>CoderrGPT</div>
+  </div>
+  <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('vibeApp')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
+    <div>Vibe</div>
+  </div>
+
+  <div id="notesApp" class="window" style="top:100px; left:100px;">
+    <div class="title-bar" onmousedown="startDrag(event)">📝 Notes</div>
+    <div class="content">
+      <textarea rows="10" placeholder="Type your cosmic thoughts..."></textarea>
+    </div>
+  </div>
+
+  <div id="aiApp" class="window" style="top:150px; left:150px;">
+    <div class="title-bar" onmousedown="startDrag(event)">🤖 CoderrGPT</div>
+    <div class="content">
+      <p><em>This is a placeholder for future GPT integration.</em></p>
+      <p>You can simulate a chat here.</p>
+    </div>
+  </div>
+
+  <div id="vibeApp" class="window" style="top:200px; left:200px;">
+    <div class="title-bar" onmousedown="startDrag(event)">🔮 Vibration Tracker</div>
+    <div class="content">
+      <p>Your energy level today: <strong>HIGH</strong></p>
+      <p>Next alignment: 9:44 PM</p>
+    </div>
+  </div>
+
+  <div id="taskbar">
+    <div>🌌 Cosmos Coderr OS</div>
+    <div id="clock"></div>
+  </div>
+</div>
+
+<script>
+  // Boot to desktop
+  setTimeout(() => {
+    document.getElementById("desktop").style.display = "block";
+  }, 3000);
+
+  function openApp(appId) {
+    document.getElementById(appId).style.display = "block";
+  }
+
+  let dragTarget, offsetX, offsetY;
+
+  function startDrag(e) {
+    dragTarget = e.target.parentElement;
+    offsetX = e.clientX - dragTarget.offsetLeft;
+    offsetY = e.clientY - dragTarget.offsetTop;
+    document.onmousemove = drag;
+    document.onmouseup = stopDrag;
+  }
+
+  function drag(e) {
+    if (!dragTarget) return;
+    dragTarget.style.left = e.clientX - offsetX + "px";
+    dragTarget.style.top = e.clientY - offsetY + "px";
+  }
+
+  function stopDrag() {
+    dragTarget = null;
+    document.onmousemove = null;
+    document.onmouseup = null;
+  }
+
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("clock").innerText = now.toLocaleTimeString();
+  }
+
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
