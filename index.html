@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cosmos Coderr OS v3.0</title>
+  <title>Cosmos Coderr OS v4.0</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
@@ -11,31 +11,43 @@
       height: 100vh;
       background: black;
       color: white;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Orbitron', sans-serif;
       overflow: hidden;
     }
     #boot {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: radial-gradient(#0ff2, #000 80%);
+      background: radial-gradient(circle at center, #0ff4 10%, #000 70%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 10;
-      animation: fadeOut 2s ease 3s forwards;
+      z-index: 20;
+      animation: fadeOut 1s ease 5s forwards;
     }
     #boot p {
-      font-size: 1.2em;
-      animation: typing 2s steps(30, end), blink .75s step-end infinite;
-      border-right: 3px solid cyan;
+      font-size: 1.5em;
+      animation: typing 3s steps(40, end), blink .5s step-end infinite;
+      border-right: 4px solid cyan;
       white-space: nowrap;
       overflow: hidden;
+      text-shadow: 0 0 10px cyan;
+    }
+    #boot .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      animation: twinkle 10s infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
     }
     @keyframes typing { from { width: 0 } to { width: 100% } }
     @keyframes blink { from, to { border-color: transparent } 50% { border-color: cyan } }
     @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+    @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     #login {
       display: none;
@@ -47,15 +59,43 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      z-index: 9;
+      z-index: 15;
+      animation: slideIn 1s ease;
+    }
+    #login h2 {
+      font-size: 2em;
+      text-shadow: 0 0 15px cyan;
+      margin-bottom: 20px;
     }
     #login input, #login select {
-      background: black;
+      background: rgba(0, 0, 0, 0.8);
       color: cyan;
-      border: 1px solid cyan;
-      padding: 10px;
+      border: 2px solid cyan;
+      padding: 12px;
       margin: 10px;
+      border-radius: 5px;
+      font-family: 'Orbitron', sans-serif;
+      transition: box-shadow 0.3s ease;
     }
+    #login input:focus, #login select:focus {
+      box-shadow: 0 0 10px cyan;
+      outline: none;
+    }
+    #login button {
+      background: cyan;
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #login button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px cyan;
+    }
+
     #desktop {
       display: none;
       width: 100%;
@@ -71,150 +111,356 @@
       width: 80px;
       color: cyan;
       cursor: pointer;
+      transition: transform 0.2s ease;
+      text-shadow: 0 0 5px cyan;
+    }
+    .icon:hover {
+      transform: scale(1.1);
     }
     .icon img {
       width: 64px;
+      filter: drop-shadow(0 0 5px cyan);
     }
     .window {
       position: absolute;
-      width: 300px;
-      height: 250px;
-      background: rgba(0,0,0,0.85);
-      border: 1px solid cyan;
-      box-shadow: 0 0 10px cyan;
+      width: 350px;
+      height: 300px;
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid cyan;
+      border-radius: 8px;
+      box-shadow: 0 0 15px cyan;
       display: none;
       z-index: 10;
+      resize: both;
+      overflow: auto;
+      min-width: 200px;
+      min-height: 150px;
     }
     .title-bar {
-      background: cyan;
+      background: linear-gradient(90deg, cyan, #00b7eb);
       color: black;
-      padding: 5px;
+      padding: 8px;
       font-weight: bold;
       cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    .title-bar button {
+      background: none;
+      border: none;
+      color: black;
+      cursor: pointer;
+      font-size: 14px;
     }
     .content {
-      padding: 10px;
-      height: calc(100% - 30px);
+      padding: 15px;
+      height: calc(100% - 40px);
       overflow-y: auto;
+      color: cyan;
     }
     #taskbar {
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 30px;
-      background: rgba(0,0,0,0.7);
+      height: 40px;
+      background: rgba(0, 0, 0, 0.85);
       color: cyan;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 10px;
-      font-size: 14px;
+      padding: 0 15px;
+      font-size: 16px;
+      box-shadow: 0 -2px 10px cyan;
+    }
+    #start-menu {
+      position: absolute;
+      bottom: 40px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid cyan;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      padding: 10px;
+      z-index: 20;
+    }
+    #start-menu button {
+      background: none;
+      color: cyan;
+      border: none;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      transition: background 0.2s ease;
+    }
+    #start-menu button:hover {
+      background: rgba(0, 255, 255, 0.2);
+    }
+    #system-tray {
+      display: flex;
+      gap: 10px;
+    }
+    #system-tray .tray-icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      filter: invert(1) hue-rotate(180deg);
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <audio id="bootSound" src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
+  <audio id="clickSound" src="https://www.soundjay.com/buttons/beep-07.mp3"></audio>
 
-<div id="boot">
-  <p>Scanning Soul Signature...</p>
-</div>
-
-<div id="login">
-  <h2>Welcome to Cosmos Coderr OS</h2>
-  <input type="text" placeholder="Enter Cosmic Name" id="username">
-  <select id="rank">
-    <option value="Starborn">Starborn</option>
-    <option value="Celestial Dev">Celestial Dev</option>
-    <option value="Etherlinker">Etherlinker</option>
-    <option value="Omni Root">Omni Root</option>
-  </select>
-  <button onclick="launchOS()">Enter System</button>
-</div>
-
-<div id="desktop">
-  <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('soulApp')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
-    <div>SoulScan</div>
-  </div>
-  <div class="icon" style="top: 40px; left: 140px;" onclick="openApp('aiApp')">
-    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
-    <div>CoderrGPT</div>
-  </div>
-  <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('mapApp')">
-    <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
-    <div>Star Map</div>
+  <div id="boot">
+    <div class="stars" style="background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;"></div>
+    <p>Initializing Cosmic Nexus...</p>
   </div>
 
-  <div id="soulApp" class="window" style="top:100px; left:100px;">
-    <div class="title-bar" onmousedown="startDrag(event)">🔮 SoulScan</div>
-    <div class="content">
-      <p>Analyzing aura...</p>
-      <p>Energy Pattern: <b>Crystalline Ascendant</b></p>
-      <p>Starseed Origin: <b>Lyra</b></p>
+  <div id="login">
+    <h2>Welcome to Cosmos Coderr OS v4.0</h2>
+    <input type="text" placeholder="Enter Cosmic Name" id="username">
+    <select id="rank">
+      <option value="Starborn">Starborn</option>
+      <option value="Celestial Dev">Celestial Dev</option>
+      <option value="Etherlinker">Etherlinker</option>
+      <option value="Omni Root">Omni Root</option>
+    </select>
+    <button onclick="launchOS()">Enter Cosmic Nexus</button>
+  </div>
+
+  <div id="desktop">
+    <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('soulApp')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
+      <div>SoulScan</div>
+    </div>
+    <div class="icon" style="top: 40px; left: 140px;" onclick="openApp('aiApp')">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
+      <div>CoderrGPT</div>
+    </div>
+    <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('mapApp')">
+      <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
+      <div>Star Map</div>
+    </div>
+    <div class="icon" style="top: 140px; left: 140px;" onclick="openApp('settingsApp')">
+      <img src="https://cdn-icons-png.flaticon.com/512/126/126794.png" />
+      <div>Settings</div>
+    </div>
+
+    <div id="soulApp" class="window" style="top:100px; left:100px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>🔮 SoulScan</span>
+        <button onclick="closeApp('soulApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Analyzing aura...</p>
+        <p>Energy Pattern: <b>Crystalline Ascendant</b></p>
+        <p>Starseed Origin: <b>Lyra</b></p>
+      </div>
+    </div>
+
+    <div id="aiApp" class="window" style="top:150px; left:150px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>🤖 CoderrGPT</span>
+        <button onclick="closeApp('aiApp')">✖</button>
+      </div>
+      <div class="content">
+        <input type="text" id="aiInput" placeholder="Ask CoderrGPT..." style="width: 100%; margin-bottom: 10px;">
+        <div id="aiOutput">This is a simulated AI. Type your query above.</div>
+      </div>
+    </div>
+
+    <div id="mapApp" class="window" style="top:200px; left:200px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>🌌 Star Map</span>
+        <button onclick="closeApp('mapApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Your current constellation: <b>Orion's Gate</b></p>
+        <p>Portal Opens: <b>June 22, 3:33 AM</b></p>
+        <canvas id="starChart" width="300" height="100"></canvas>
+      </div>
+    </div>
+
+    <div id="settingsApp" class="window" style="top:120px; left:120px;">
+      <div class="title-bar" onmousedown="startDrag(event)">
+        <span>⚙ Settings</span>
+        <button onclick="closeApp('settingsApp')">✖</button>
+      </div>
+      <div class="content">
+        <p>Background: <select id="bgSelect" onchange="changeBackground()">
+          <option value="https://i.imgur.com/3oQfQxC.jpg">Nebula</option>
+          <option value="https://i.imgur.com/8Q0qW7J.jpg">Galaxy</option>
+        </select></p>
+        <p>Theme: <select id="themeSelect" onchange="changeTheme()">
+          <option value="cyan">Cyan</option>
+          <option value="magenta">Magenta</option>
+        </select></p>
+      </div>
+    </div>
+
+    <div id="taskbar">
+      <button onclick="toggleStartMenu()">🛸 Cosmos Coderr OS</button>
+      <div id="start-menu">
+        <button onclick="openApp('soulApp')">SoulScan</button>
+        <button onclick="openApp('aiApp')">CoderrGPT</button>
+        <button onclick="openApp('mapApp')">Star Map</button>
+        <button onclick="openApp('settingsApp')">Settings</button>
+        <button onclick="logout()">Logout</button>
+      </div>
+      <div id="system-tray">
+        <img class="tray-icon" src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" onclick="openApp('settingsApp')" title="Settings">
+        <div id="clock"></div>
+      </div>
     </div>
   </div>
 
-  <div id="aiApp" class="window" style="top:150px; left:150px;">
-    <div class="title-bar" onmousedown="startDrag(event)">🤖 CoderrGPT</div>
-    <div class="content">
-      <p>This is a simulated AI. Real interface coming soon.</p>
-    </div>
-  </div>
+  <script>
+    // Sound Effects
+    const bootSound = document.getElementById('bootSound');
+    const clickSound = document.getElementById('clickSound');
+    bootSound.play();
 
-  <div id="mapApp" class="window" style="top:200px; left:200px;">
-    <div class="title-bar" onmousedown="startDrag(event)">🌌 Star Map</div>
-    <div class="content">
-      <p>Your current constellation: <b>Orion's Gate</b></p>
-      <p>Portal Opens: <b>June 22, 3:33 AM</b></p>
-    </div>
-  </div>
+    // Boot Sequence
+    setTimeout(() => {
+      document.getElementById("login").style.display = "flex";
+    }, 5000);
 
-  <div id="taskbar">
-    <div>🛸 Cosmos Coderr OS</div>
-    <div id="clock"></div>
-  </div>
-</div>
+    // User Persistence
+    const usernameInput = document.getElementById('username');
+    usernameInput.value = localStorage.getItem('cosmicName') || '';
 
-<script>
-  setTimeout(() => {
-    document.getElementById("login").style.display = "flex";
-  }, 3000);
+    function launchOS() {
+      clickSound.play();
+      localStorage.setItem('cosmicName', usernameInput.value);
+      localStorage.setItem('rank', document.getElementById('rank').value);
+      document.getElementById("login").style.display = "none";
+      document.getElementById("desktop").style.display = "block";
+      drawStarChart();
+    }
 
-  function launchOS() {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("desktop").style.display = "block";
-  }
+    function logout() {
+      clickSound.play();
+      document.getElementById("desktop").style.display = "none";
+      document.getElementById("login").style.display = "flex";
+    }
 
-  function openApp(id) {
-    document.getElementById(id).style.display = "block";
-  }
+    // Window Management
+    let zIndex = 10;
+    function openApp(id) {
+      clickSound.play();
+      const app = document.getElementById(id);
+      app.style.display = "block";
+      app.style.zIndex = zIndex++;
+      app.querySelector('.content').scrollTop = 0;
+    }
 
-  let dragTarget, offsetX, offsetY;
-  function startDrag(e) {
-    dragTarget = e.target.parentElement;
-    offsetX = e.clientX - dragTarget.offsetLeft;
-    offsetY = e.clientY - dragTarget.offsetTop;
-    document.onmousemove = drag;
-    document.onmouseup = stopDrag;
-  }
+    function closeApp(id) {
+      clickSound.play();
+      document.getElementById(id).style.display = "none";
+    }
 
-  function drag(e) {
-    if (!dragTarget) return;
-    dragTarget.style.left = (e.clientX - offsetX) + "px";
-    dragTarget.style.top = (e.clientY - offsetY) + "px";
-  }
+    // Drag Functionality
+    let dragTarget, offsetX, offsetY;
+    function startDrag(e) {
+      dragTarget = e.target.closest('.window');
+      offsetX = e.clientX - dragTarget.offsetLeft;
+      offsetY = e.clientY - dragTarget.offsetTop;
+      dragTarget.style.zIndex = zIndex++;
+      document.onmousemove = drag;
+      document.onmouseup = stopDrag;
+    }
 
-  function stopDrag() {
-    dragTarget = null;
-    document.onmousemove = null;
-    document.onmouseup = null;
-  }
+    function drag(e) {
+      if (!dragTarget) return;
+      dragTarget.style.left = (e.clientX - offsetX) + "px";
+      dragTarget.style.top = (e.clientY - offsetY) + "px";
+    }
 
-  function updateClock() {
-    const now = new Date();
-    document.getElementById("clock").innerText = now.toLocaleTimeString();
-  }
-  setInterval(updateClock, 1000);
-</script>
+    function stopDrag() {
+      dragTarget = null;
+      document.onmousemove = null;
+      document.onmouseup = null;
+    }
 
+    // Start Menu
+    function toggleStartMenu() {
+      clickSound.play();
+      const menu = document.getElementById('start-menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+
+    // Star Chart
+    function drawStarChart() {
+      const canvas = document.getElementById('starChart');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 50; i++) {
+        ctx.beginPath();
+        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 255, 255, ${Math.random()})`;
+        ctx.fill();
+      }
+    }
+
+    // Settings
+    function changeBackground() {
+      clickSound.play();
+      const bg = document.getElementById('bgSelect').value;
+      document.getElementById('desktop').style.backgroundImage = `url(${bg})`;
+      document.getElementById('login').style.backgroundImage = `url(${bg})`;
+      localStorage.setItem('background', bg);
+    }
+
+    function changeTheme() {
+      clickSound.play();
+      const theme = document.getElementById('themeSelect').value;
+      const color = theme === 'cyan' ? 'cyan' : 'magenta';
+      document.querySelectorAll('.window').forEach(w => w.style.borderColor = color);
+      document.querySelectorAll('.title-bar').forEach(tb => tb.style.background = `linear-gradient(90deg, ${color}, ${theme === 'cyan' ? '#00b7eb' : '#ff00ff'})`);
+      document.querySelectorAll('.icon').forEach(i => i.style.color = color);
+      document.querySelectorAll('#start-menu button').forEach(b => b.style.color = color);
+      localStorage.setItem('theme', theme);
+    }
+
+    // Load Saved Settings
+    window.onload = () => {
+      const savedBg = localStorage.getItem('background');
+      if (savedBg) {
+        document.getElementById('desktop').style.backgroundImage = `url(${savedBg})`;
+        document.getElementById('login').style.backgroundImage = `url(${savedBg})`;
+        document.getElementById('bgSelect').value = savedBg;
+      }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.getElementById('themeSelect').value = savedTheme;
+        changeTheme();
+      }
+    };
+
+    // CoderrGPT Simulation
+    document.getElementById('aiInput')?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        clickSound.play();
+        const input = e.target.value;
+        const output = document.getElementById('aiOutput');
+        output.innerText = `Processing: ${input}\nResponse: Simulated AI response for "${input}".`;
+        e.target.value = '';
+      }
+    });
+  </script>
 </body>
 </html>
