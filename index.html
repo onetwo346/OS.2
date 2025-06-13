@@ -3,71 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cosmos Coderr OS v2.0</title>
+  <title>Cosmos Coderr OS v3.0</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: black;
+      width: 100vw;
+      height: 100vh;
+      background: black;
       color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
     }
-
     #boot {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: radial-gradient(#111 0%, #000 100%);
+      background: radial-gradient(#0ff2, #000 80%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
-      animation: fadeOut 1s ease 3s forwards;
+      z-index: 10;
+      animation: fadeOut 2s ease 3s forwards;
     }
-
     #boot p {
-      font-size: 1.5em;
-      animation: typing 3s steps(40, end), blink .75s step-end infinite;
+      font-size: 1.2em;
+      animation: typing 2s steps(30, end), blink .75s step-end infinite;
+      border-right: 3px solid cyan;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 3px solid cyan;
     }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink { from, to { border-color: transparent } 50% { border-color: cyan } }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink {
-      from, to { border-color: transparent }
-      50% { border-color: cyan; }
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    #desktop {
-      width: 100vw;
-      height: 100vh;
-      background: url('https://i.imgur.com/3oQfQxC.jpg') no-repeat center center/cover;
-      position: relative;
+    #login {
       display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/3oQfQxC.jpg') center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9;
     }
-
+    #login input, #login select {
+      background: black;
+      color: cyan;
+      border: 1px solid cyan;
+      padding: 10px;
+      margin: 10px;
+    }
+    #desktop {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/3oQfQxC.jpg') no-repeat center center/cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
     .icon {
       position: absolute;
-      width: 80px;
       text-align: center;
+      width: 80px;
+      color: cyan;
       cursor: pointer;
     }
-
     .icon img {
       width: 64px;
     }
-
     .window {
       position: absolute;
       width: 300px;
@@ -78,21 +85,18 @@
       display: none;
       z-index: 10;
     }
-
     .title-bar {
       background: cyan;
       color: black;
       padding: 5px;
-      cursor: move;
       font-weight: bold;
+      cursor: move;
     }
-
     .content {
       padding: 10px;
       height: calc(100% - 30px);
       overflow-y: auto;
     }
-
     #taskbar {
       position: absolute;
       bottom: 0;
@@ -102,82 +106,89 @@
       color: cyan;
       display: flex;
       align-items: center;
-      padding: 0 10px;
       justify-content: space-between;
+      padding: 0 10px;
       font-size: 14px;
     }
-
-    textarea, input {
-      width: 100%;
-      background: black;
-      color: cyan;
-      border: none;
-      resize: none;
-    }
-
   </style>
 </head>
 <body>
 
 <div id="boot">
-  <p>Initializing Cosmos Coderr OS...</p>
+  <p>Scanning Soul Signature...</p>
+</div>
+
+<div id="login">
+  <h2>Welcome to Cosmos Coderr OS</h2>
+  <input type="text" placeholder="Enter Cosmic Name" id="username">
+  <select id="rank">
+    <option value="Starborn">Starborn</option>
+    <option value="Celestial Dev">Celestial Dev</option>
+    <option value="Etherlinker">Etherlinker</option>
+    <option value="Omni Root">Omni Root</option>
+  </select>
+  <button onclick="launchOS()">Enter System</button>
 </div>
 
 <div id="desktop">
-  <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('notesApp')">
+  <div class="icon" style="top: 40px; left: 40px;" onclick="openApp('soulApp')">
     <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" />
-    <div>Notes</div>
+    <div>SoulScan</div>
   </div>
   <div class="icon" style="top: 40px; left: 140px;" onclick="openApp('aiApp')">
     <img src="https://cdn-icons-png.flaticon.com/512/4712/4712039.png" />
     <div>CoderrGPT</div>
   </div>
-  <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('vibeApp')">
+  <div class="icon" style="top: 140px; left: 40px;" onclick="openApp('mapApp')">
     <img src="https://cdn-icons-png.flaticon.com/512/2995/2995329.png" />
-    <div>Vibe</div>
+    <div>Star Map</div>
   </div>
 
-  <div id="notesApp" class="window" style="top:100px; left:100px;">
-    <div class="title-bar" onmousedown="startDrag(event)">📝 Notes</div>
+  <div id="soulApp" class="window" style="top:100px; left:100px;">
+    <div class="title-bar" onmousedown="startDrag(event)">🔮 SoulScan</div>
     <div class="content">
-      <textarea rows="10" placeholder="Type your cosmic thoughts..."></textarea>
+      <p>Analyzing aura...</p>
+      <p>Energy Pattern: <b>Crystalline Ascendant</b></p>
+      <p>Starseed Origin: <b>Lyra</b></p>
     </div>
   </div>
 
   <div id="aiApp" class="window" style="top:150px; left:150px;">
     <div class="title-bar" onmousedown="startDrag(event)">🤖 CoderrGPT</div>
     <div class="content">
-      <p><em>This is a placeholder for future GPT integration.</em></p>
-      <p>You can simulate a chat here.</p>
+      <p>This is a simulated AI. Real interface coming soon.</p>
     </div>
   </div>
 
-  <div id="vibeApp" class="window" style="top:200px; left:200px;">
-    <div class="title-bar" onmousedown="startDrag(event)">🔮 Vibration Tracker</div>
+  <div id="mapApp" class="window" style="top:200px; left:200px;">
+    <div class="title-bar" onmousedown="startDrag(event)">🌌 Star Map</div>
     <div class="content">
-      <p>Your energy level today: <strong>HIGH</strong></p>
-      <p>Next alignment: 9:44 PM</p>
+      <p>Your current constellation: <b>Orion's Gate</b></p>
+      <p>Portal Opens: <b>June 22, 3:33 AM</b></p>
     </div>
   </div>
 
   <div id="taskbar">
-    <div>🌌 Cosmos Coderr OS</div>
+    <div>🛸 Cosmos Coderr OS</div>
     <div id="clock"></div>
   </div>
 </div>
 
 <script>
-  // Boot to desktop
   setTimeout(() => {
-    document.getElementById("desktop").style.display = "block";
+    document.getElementById("login").style.display = "flex";
   }, 3000);
 
-  function openApp(appId) {
-    document.getElementById(appId).style.display = "block";
+  function launchOS() {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("desktop").style.display = "block";
+  }
+
+  function openApp(id) {
+    document.getElementById(id).style.display = "block";
   }
 
   let dragTarget, offsetX, offsetY;
-
   function startDrag(e) {
     dragTarget = e.target.parentElement;
     offsetX = e.clientX - dragTarget.offsetLeft;
@@ -188,8 +199,8 @@
 
   function drag(e) {
     if (!dragTarget) return;
-    dragTarget.style.left = e.clientX - offsetX + "px";
-    dragTarget.style.top = e.clientY - offsetY + "px";
+    dragTarget.style.left = (e.clientX - offsetX) + "px";
+    dragTarget.style.top = (e.clientY - offsetY) + "px";
   }
 
   function stopDrag() {
@@ -202,7 +213,6 @@
     const now = new Date();
     document.getElementById("clock").innerText = now.toLocaleTimeString();
   }
-
   setInterval(updateClock, 1000);
 </script>
 
